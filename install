@@ -2,15 +2,15 @@
 
 DOTFILES=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 
-# Kitty
-rm -rf $HOME/.config/kitty
-ln -s $DOTFILES/kitty $HOME/.config/kitty
-
 # Tmux
 rm -rf $HOME/.tmux.conf
 ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
 
-# Local
+# Nvim
+rm -rf $HOME/.config/nvim
+ln -s $DOTFILES/nvim $HOME/.config/nvim
+
+# Scripts
 mkdir -p $HOME/.local/bin
 rm -rf $HOME/.local/bin/t
 ln -s $DOTFILES/scripts/t $HOME/.local/bin/t
@@ -21,6 +21,9 @@ ln -s $DOTFILES/scripts/h $HOME/.local/bin/h
 rm -rf $HOME/.local/bin/v
 ln -s $DOTFILES/scripts/v $HOME/.local/bin/v
 
-# Nvim
-rm -rf $HOME/.config/nvim
-ln -s $DOTFILES/nvim $HOME/.config/nvim
+
+# Oh my posh
+rm -rf $HOME/.cache/oh-my-posh/themes/dracula-custom.omp.json
+ln -s $DOTFILES/oh-my-posh/dracula-custom.omp.json $HOME/.cache/oh-my-posh/themes/dracula-custom.omp.json
+
+
