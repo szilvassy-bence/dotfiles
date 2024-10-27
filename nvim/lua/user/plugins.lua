@@ -58,6 +58,8 @@ use({
 use('tpope/vim-commentary')
 
 -- Add, change, and delete surrounding text.
+-- cs"' to change the surronding " to '
+-- ds' to delete the surrounding
 use('tpope/vim-surround')
 
 -- Useful commands like :Rename and :SudoWrite.
@@ -130,6 +132,7 @@ use({
 })
 
 -- Split arrays and methods onto multiple lines, or join them back up.
+-- gS to split the array to multiple line
 use({
   'AndrewRadev/splitjoin.vim',
   config = function()
