@@ -8,7 +8,7 @@ vim.opt.relativenumber = true
 
 vim.opt.smartindent = true
 
-vim.opt.wrap = false
+vim.opt.wrap = true
 
 vim.opt.wildmode = 'longest:full,full' -- complete the longest common match, and allow tabbing the results to fully complete them
 
@@ -40,5 +40,7 @@ vim.opt.confirm = true -- ask for confirmation instead of erroring
 vim.opt.undofile = true -- persistent undo
 
 vim.opt.backup = true -- automatically save a backup file
+
+vim.opt.signcolumn = 'yes:1'
 
 vim.opt.backupdir:remove('.') -- keep backups out of the current directory

@@ -3,10 +3,10 @@ require('nvim-tree').setup({
     ignore = false,
   },
   renderer = {
-    group_empty = true,
+    group_empty = false,
     icons = {
       show = {
-        folder_arrow = false,
+        folder_arrow = true,
       },
     },
     indent_markers = {

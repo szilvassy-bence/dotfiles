@@ -30,7 +30,7 @@ use('wbthomason/packer.nvim')
 use({
   'jessarcher/onedark.nvim',
   config = function()
-    vim.cmd('colorscheme onedark')
+    vim.cmd('colorscheme retrobox')
 
     vim.api.nvim_set_hl(0, 'FloatBorder', {
       fg = vim.api.nvim_get_hl_by_name('NormalFloat', true).background,
@@ -46,11 +46,11 @@ use({
     vim.api.nvim_set_hl(0, 'NvimTreeIndentMarker', { fg = '#30323E' })
 
     vim.api.nvim_set_hl(0, 'StatusLineNonText', {
-      fg = vim.api.nvim_get_hl_by_name('NonText', true).foreground,
-      bg = vim.api.nvim_get_hl_by_name('StatusLine', true).background,
+    -- fg = vim.api.nvim_get_hl_by_name('NonText', true).background,
+    bg = vim.api.nvim_get_hl_by_name('StatusLine', true).foreground,
     })
 
-    vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#2F313C' })
+    -- vim.api.nvim_set_hl(0, 'IndentBlanklineChar', { fg = '#2F313C' })
   end,
 })
 
@@ -173,11 +173,65 @@ use({
   end,
 })
 
+-- A Status line.
+use({
+  'nvim-lualine/lualine.nvim',
+  requires = 'kyazdani42/nvim-web-devicons',
+  config = function()
+    require('user/plugins/lualine')
+  end,
+})
+
+-- Display buffers as tabs.
+use({
+  'akinsho/bufferline.nvim',
+  requires = 'kyazdani42/nvim-web-devicons',
+  after = 'onedark.nvim',
+  config = function()
+    require('user/plugins/bufferline')
+  end,
+})
+
+-- Display indentation lines.
+-- use({
+--   'lukas-reineke/indent-blankline.nvim',
+--   config = function()
+--     require('user/plugins/indent-blankline')
+--   end,
+-- })
+
+use({
+    'glepnir/dashboard-nvim',
+    config = function()
+      require('user/plugins/dashboard-nvim')
+    end
+  })
+
+-- Git integration
+use({
+    'lewis6991/gitsigns.nvim',
+    config = function()
+      require('gitsigns').setup({ current_line_blame = true })
+      vim.keymap.set('n', ']h', ':Gitsigns next_hunk<CR>')
+      vim.keymap.set('n', '[h', ':Gitsigns prev_hunk<CR>')
+      vim.keymap.set('n', 'gs', ':Gitsigns stage_hunk<CR>')
+      vim.keymap.set('n', 'gS', ':Gitsigns undo_stage_hunk<CR>')
+      vim.keymap.set('n', 'gp', ':Gitsigns preview_hunk<CR>')
+      vim.keymap.set('n', 'gb', ':Gitsigns blame_line<CR>')
+    end,
+  })
+-- Git commands.
+use({
+    'tpope/vim-fugitive',
+    requires = 'tpope/vim-rhubarb',
+  })
+
 -- Automatically set up your configuration after cloning packer.nvim
 -- Put this at the end after all plugins
 if packer_bootstrap then
     require('packer').sync()
 end
+
 
 vim.cmd([[
   augroup packer_user_config
