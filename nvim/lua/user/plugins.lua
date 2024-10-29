@@ -220,6 +220,7 @@ use({
       vim.keymap.set('n', 'gb', ':Gitsigns blame_line<CR>')
     end,
   })
+
 -- Git commands.
 use({
     'tpope/vim-fugitive',
@@ -232,7 +233,6 @@ if packer_bootstrap then
     require('packer').sync()
 end
 
-
 vim.cmd([[
   augroup packer_user_config
     autocmd!
@@ -240,8 +240,7 @@ vim.cmd([[
   augroup end
 ]])
 
-
--- 
+-- Vim command to change the line to All Starting Capitals
 vim.api.nvim_create_user_command('Title', function()
   local current_line = vim.fn.getline(".")
 
