@@ -39,5 +39,9 @@ vim.keymap.set('n', '<A-k>', ':move .-2<CR>==')
 vim.keymap.set('v', '<A-j>', ":move '>+1<CR>gv=gv")
 vim.keymap.set('v', '<A-k>', ":move '<-2<CR>gv=gv")
 
+-- Bufferline
+vim.api.nvim_set_keymap('n', '<leader>xo', ':BufferLineCloseOthers<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>xx', ':bdelete<CR>', { noremap = true, silent = true })
+
 vim.keymap.set('n', '<leader>tt', ':Title<CR>', { noremap = true, silent = true })
 
