@@ -20,8 +20,8 @@ require('lualine').setup({
     lualine_b = {
       'branch',
       {
-      'diff',
-      color = { fg = '#1c1c1c' } -- Replace '#ff8800' with your preferred color code
+        'diff',
+        color = { fg = '#1c1c1c' }
       },
       separator,
       '"🖧  " .. tostring(#vim.tbl_keys(vim.lsp.buf_get_clients()))',
@@ -32,7 +32,10 @@ require('lualine').setup({
       'filename'
     },
     lualine_x = {
-      'filetype',
+      {
+        'filetype',
+        color =  { fg = '#1c1c1c' },
+      },
       'encoding',
       'fileformat',
     },
