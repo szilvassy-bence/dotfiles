@@ -45,3 +45,6 @@ vim.api.nvim_set_keymap('n', '<leader>xx', ':bdelete<CR>', { noremap = true, sil
 
 vim.keymap.set('n', '<leader>tt', ':Title<CR>', { noremap = true, silent = true })
 
+-- Move split
+vim.api.nvim_set_keymap('n', '<Leader>h', ':vertical resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>l', ':vertical resize +5<CR>', { noremap = true, silent = true })
