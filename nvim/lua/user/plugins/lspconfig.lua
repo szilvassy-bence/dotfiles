@@ -16,7 +16,7 @@ require('lspconfig').volar.setup({
 })
 
 -- Tailwind CSS
--- require('lspconfig').tailwindcss.setup({ capabilities = capabilities })
+require('lspconfig').tailwindcss.setup({ capabilities = capabilities })
 
 -- JSON
 require('lspconfig').jsonls.setup({
@@ -27,16 +27,6 @@ require('lspconfig').jsonls.setup({
     },
   },
 })
--- JSON
--- require('lspconfig').jsonls.setup({
---   capabilities = capabilities,
---   settings = {
---     json = {
---       schemas = require('schemastore').json.schemas(),
---     },
---   },
--- })
-
 
 -- null-ls
 require('null-ls').setup({
