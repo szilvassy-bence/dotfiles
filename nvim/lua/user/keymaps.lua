@@ -48,3 +48,20 @@ vim.keymap.set('n', '<leader>tt', ':Title<CR>', { noremap = true, silent = true 
 -- Move split
 vim.api.nvim_set_keymap('n', '<Leader>h', ':vertical resize -5<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>l', ':vertical resize +5<CR>', { noremap = true, silent = true })
+
+-- Links
+-- vim.keymap.set("n", "gl", function()
+--   local link = vim.fn.expand("<cWORD>")
+--   if link:match("^#") then
+--     local anchor = link:sub(2):gsub("-", " ")
+--     vim.cmd("normal! gg")vim.keymap.set("n", "gl", function()
+--         local link = vim.fn.expand("<cWORD>")
+--           if link:match("^#") then
+--                 local anchor = link:sub(2):gsub("-", " ")
+--                     vim.cmd("normal! gg")
+--                         vim.fn.search("^##* " .. anchor)
+--                           end
+--                         end, { desc = "Jump to Markdown anchor" })
+--     vim.fn.search("^##* " .. anchor)
+--   end
+-- end, { desc = "Jump to Markdown anchor" })
