@@ -1,29 +1,66 @@
 #!/usr/bin/env bash
 
 DOTFILES=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+TMUX_FILE=$DOTFILES/tmux/tmux.conf
+NEOVIM_DIR=$DOTFILES/nvim
+SCRIPTS_SOURCE_DIR=$DOTFILES/scripts
+SCRIPTS_DEST_DIR=$HOME/.local/bin
+OH_MY_POSH_FILE=$DOTFILES/oh-my-posh/dracula-custom.omp.json
 
 # Tmux
-rm -rf $HOME/.tmux.conf
-ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
+if [[ -f $TMUX_FILE ]]; then
+    rm -rf $HOME/.tmux.conf
+    ln -s $TMUX_FILE $HOME/.tmux.conf
+    echo "Tmux config file is loaded"
+else
+    echo "Tmux config file cannot be loaded"
+fi
 
 # Nvim
-rm -rf $HOME/.config/nvim
-ln -s $DOTFILES/nvim $HOME/.config/nvim
+if [[ -d $NEOVIM_DIR ]]; then
+    rm -rf $HOME/.config/nvim
+    ln -s $NEOVIM_DIR $HOME/.config/nvim
+    echo "Neovim config file is loaded"
+else
+    echo "Neovim config file cannot be loaded"
+fi
+
+echo $SCRIPTS_SOURCE_DIR
 
 # Scripts
-mkdir -p $HOME/.local/bin
-rm -rf $HOME/.local/bin/t
-ln -s $DOTFILES/scripts/t $HOME/.local/bin/t
-rm -rf $HOME/.local/bin/title
-ln -s $DOTFILES/scripts/title $HOME/.local/bin/title
-rm -rf $HOME/.local/bin/h
-ln -s $DOTFILES/scripts/h $HOME/.local/bin/h
-rm -rf $HOME/.local/bin/v
-ln -s $DOTFILES/scripts/v $HOME/.local/bin/v
+mkdir -p $SCRIPTS_DEST_DIR
 
+if [[ -d $SCRIPTS_SOURCE_DIR ]]; then
+    rm -rf $SCRIPTS_DEST_DIR/t
+    ln -s $SCRIPTS_SOURCE_DIR/t $SCRIPTS_DEST_DIR/t
+
+    rm -rf $SCRIPTS_DEST_DIR/title
+    ln -s $SCRIPTS_SOURCE_DIR/title $SCRIPTS_DEST_DIR/title
+
+    rm -rf $SCRIPTS_DEST_DIR/h
+    ln -s $SCRIPTS_SOURCE_DIR/h $SCRIPTS_DEST_DIR/h
+
+    rm -rf $SCRIPTS_DEST_DIR/v
+    ln -s $SCRIPTS_SOURCE_DIR/v $SCRIPTS_DEST_DIR/v
+
+    rm -rf $SCRIPTS_DEST_DIR/today
+    ln -s $SCRIPTS_SOURCE_DIR/today $SCRIPTS_DEST_DIR/today
+
+    rm -rf $SCRIPTS_DEST_DIR/rbu
+    ln -s $SCRIPTS_SOURCE_DIR/rbu $SCRIPTS_DEST_DIR/rbu
+
+    echo "Scripts are loaded"
+else
+    echo "Scripts cannot be loaded"
+fi
 
 # Oh my posh
-rm -rf $HOME/.cache/oh-my-posh/themes/dracula-custom.omp.json
-ln -s $DOTFILES/oh-my-posh/dracula-custom.omp.json $HOME/.cache/oh-my-posh/themes/dracula-custom.omp.json
+if [[ -f $OH_MY_POSH_FILE ]]; then
+    rm -rf $HOME/.cache/oh-my-posh/themes/dracula-custom.omp.json
+    ln -s $OH_MY_POSH_FILE $HOME/.cache/oh-my-posh/themes/dracula-custom.omp.json
+    echo "Oh-my-posh config file is loaded"
+else
+    echo "Oh-my-posh config file cannot be loaded"
+fi
 
 

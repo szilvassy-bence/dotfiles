@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Run sync from source to destination
+
+SOURCE="$HOME/code/notes/work/"
+DEST_BACKUPS="/mnt/c/Users/Pepita/Documents/backups"
+
+rsync -avz --delete "$HOME/code/notes/work/" "$DEST_BACKUPS/notes"
+rsync -avz --delete "$HOME/.bashrc" $DEST_BACKUPS

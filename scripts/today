@@ -1,0 +1,11 @@
+#!/bin/bash
+
+file=$(date '+%Y-%m-%d').md
+path="$HOME/code/notes/work/diary/$file"
+
+# Check if the file exists
+if [[ ! -f "$path" ]]; then
+    echo "# $(date '+%Y-%m-%d')" > "$path"
+fi
+
+nvim "$path"

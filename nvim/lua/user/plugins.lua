@@ -60,6 +60,7 @@ use('tpope/vim-commentary')
 -- Add, change, and delete surrounding text.
 -- cs"' to change the surronding " to '
 -- ds' to delete the surrounding
+-- ys{motion}{surrounding} to add new surrounding to motions
 use('tpope/vim-surround')
 
 -- Useful commands like :Rename and :SudoWrite.

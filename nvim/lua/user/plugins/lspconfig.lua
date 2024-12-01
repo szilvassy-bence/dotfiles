@@ -15,8 +15,11 @@ require('lspconfig').volar.setup({
   filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
 })
 
--- Tailwind CSS
-require('lspconfig').tailwindcss.setup({ capabilities = capabilities })
+-- BASH
+require('lspconfig').bashls.setup{
+  capabilities = capabilities,
+  filetypes = { 'sh' },
+}
 
 -- JSON
 require('lspconfig').jsonls.setup({
