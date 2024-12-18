@@ -1,9 +1,17 @@
 #!/bin/bash
 
-# Run sync from source to destination
-
-SOURCE="$HOME/code/notes/work/"
 DEST_BACKUPS="/mnt/c/Users/Pepita/Documents/backups"
+NOTES_WORK_DIR=$HOME/code/notes/work/
+BASH_RC_PATH=$HOME/.bashrc
+PROFILE_PATH=$HOME/.profile
+BASH_ALIASES_PATH=$HOME/.bash_aliases
 
-rsync -avz --delete "$HOME/code/notes/work/" "$DEST_BACKUPS/notes"
-rsync -avz --delete "$HOME/.bashrc" $DEST_BACKUPS
+if [[ -d $NOTES_WORK_DIR ]]; then
+    rsync -avz --delete "$NOTES_WORK_DIR" "$DEST_BACKUPS/notes"
+fi
+
+if [[ -f $BASH_RC_PATH ]]; then
+    rsync -avz --delete $BASH_RC_PATH $DEST_BACKUPS
+    rsync -avz --delete $PROFILE_PATH $DEST_BACKUPS
+    rsync -avz --delete $BASH_ALIASES_PATH $DEST_BACKUPS
+fi

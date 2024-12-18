@@ -1,7 +1,20 @@
 #!/bin/bash
 
+if [[ $# -ne 1 ]]; then
+    echo "Usage: today '0' to write into work and '1' to write into personal."
+    exit 1
+fi
+
 file=$(date '+%Y-%m-%d').md
-path="$HOME/code/notes/work/diary/$file"
+
+if [[ $1 -eq 0 ]]; then
+    path="$HOME/code/notes/work/diary/$file"
+elif [[ $1 -eq 1 ]]; then
+    path="$HOME/code/notes/personal/diary/$file"
+else
+    echo "The input can be 0 or 1."
+    exit 1
+fi
 
 # Check if the file exists
 if [[ ! -f "$path" ]]; then

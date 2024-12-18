@@ -7,6 +7,16 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 -- PHP
 require('lspconfig').intelephense.setup({ capabilities = capabilities })
 
+-- Clangd
+require('lspconfig').clangd.setup({
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    -- Disable clangd's formatting capabilities to avoid conflicts
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
+})
+
 -- Vue, JavaScript, TypeScript
 require('lspconfig').volar.setup({
   capabilities = capabilities,
@@ -54,7 +64,7 @@ require('mason-null-ls').setup({ automatic_installation = true })
 vim.keymap.set('n', '<Leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { buffer = true, desc = "Go to Definition" })
 vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
 vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
 vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
