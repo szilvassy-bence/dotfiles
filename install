@@ -3,49 +3,59 @@
 DOTFILES=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 TMUX_FILE=$DOTFILES/tmux/tmux.conf
 NEOVIM_DIR=$DOTFILES/nvim
+PHPACTOR_DIR=$DOTFILES/phpactor
 SCRIPTS_SOURCE_DIR=$DOTFILES/scripts
 SCRIPTS_DEST_DIR=$HOME/.local/bin
 OH_MY_POSH_FILE=$DOTFILES/oh-my-posh/dracula-custom.omp.json
 
 # Tmux
 if [[ -f $TMUX_FILE ]]; then
-    rm -rf $HOME/.tmux.conf
-    ln -s $TMUX_FILE $HOME/.tmux.conf
+    rm -rf "$HOME"/.tmux.conf
+    ln -s "$TMUX_FILE" "$HOME"/.tmux.conf
     echo "Tmux config file is loaded"
 else
     echo "Tmux config file cannot be loaded"
 fi
 
 # Nvim
-if [[ -d $NEOVIM_DIR ]]; then
-    rm -rf $HOME/.config/nvim
-    ln -s $NEOVIM_DIR $HOME/.config/nvim
+if [[ -d "$NEOVIM_DIR" ]]; then
+    rm -rf "$HOME"/.config/nvim
+    ln -s "$NEOVIM_DIR" "$HOME"/.config/nvim
     echo "Neovim config file is loaded"
 else
     echo "Neovim config file cannot be loaded"
 fi
 
+# PhpActor
+if [[ -d "$PHPACTOR_DIR" ]]; then
+    rm -rf "$HOME"/.config/phpactor
+    ln -s "$PHPACTOR_DIR" "$HOME"/.config/phpactor
+    echo "PhpActor config file is loaded"
+else
+    echo "PhpActor config file cannot be loaded"
+fi
+
 # Scripts
-mkdir -p $SCRIPTS_DEST_DIR
+mkdir -p "$SCRIPTS_DEST_DIR"
 
 if [[ -d $SCRIPTS_SOURCE_DIR ]]; then
-    rm -rf $SCRIPTS_DEST_DIR/t
-    ln -s $SCRIPTS_SOURCE_DIR/t $SCRIPTS_DEST_DIR/t
+    rm -rf "$SCRIPTS_DEST_DIR"/t
+    ln -s "$SCRIPTS_SOURCE_DIR"/t "$SCRIPTS_DEST_DIR"/t
 
-    rm -rf $SCRIPTS_DEST_DIR/title
-    ln -s $SCRIPTS_SOURCE_DIR/title $SCRIPTS_DEST_DIR/title
+    rm -rf "$SCRIPTS_DEST_DIR"/title
+    ln -s "$SCRIPTS_SOURCE_DIR"/title "$SCRIPTS_DEST_DIR"/title
 
-    rm -rf $SCRIPTS_DEST_DIR/h
-    ln -s $SCRIPTS_SOURCE_DIR/h $SCRIPTS_DEST_DIR/h
+    rm -rf "$SCRIPTS_DEST_DIR"/h
+    ln -s "$SCRIPTS_SOURCE_DIR"/h "$SCRIPTS_DEST_DIR"/h
 
-    rm -rf $SCRIPTS_DEST_DIR/v
-    ln -s $SCRIPTS_SOURCE_DIR/v $SCRIPTS_DEST_DIR/v
+    rm -rf "$SCRIPTS_DEST_DIR"/v
+    ln -s "$SCRIPTS_SOURCE_DIR"/v "$SCRIPTS_DEST_DIR"/v
 
-    rm -rf $SCRIPTS_DEST_DIR/today
-    ln -s $SCRIPTS_SOURCE_DIR/today $SCRIPTS_DEST_DIR/today
+    rm -rf "$SCRIPTS_DEST_DIR"/today
+    ln -s "$SCRIPTS_SOURCE_DIR"/today "$SCRIPTS_DEST_DIR"/today
 
-    rm -rf $SCRIPTS_DEST_DIR/rbu
-    ln -s $SCRIPTS_SOURCE_DIR/rbu $SCRIPTS_DEST_DIR/rbu
+    rm -rf "$SCRIPTS_DEST_DIR"/rbu
+    ln -s "$SCRIPTS_SOURCE_DIR"/rbu "$SCRIPTS_DEST_DIR"/rbu
 
     echo "Scripts are loaded"
 else
@@ -54,8 +64,8 @@ fi
 
 # Oh my posh
 if [[ -f $OH_MY_POSH_FILE ]]; then
-    rm -rf $HOME/.cache/oh-my-posh/themes/dracula-custom.omp.json
-    ln -s $OH_MY_POSH_FILE $HOME/.cache/oh-my-posh/themes/dracula-custom.omp.json
+    rm -rf "$HOME"/.cache/oh-my-posh/themes/dracula-custom.omp.json
+    ln -s "$OH_MY_POSH_FILE" "$HOME"/.cache/oh-my-posh/themes/dracula-custom.omp.json
     echo "Oh-my-posh config file is loaded"
 else
     echo "Oh-my-posh config file cannot be loaded"

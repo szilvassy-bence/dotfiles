@@ -10,6 +10,3 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt_local.expandtab = true
     end,
 })
-
--- Remap Ctrl+Q to enter visual block mode (instead of Ctrl+V)
-vim.api.nvim_set_keymap('n', '<C-q>', '<C-v>', { noremap = true, silent = true })

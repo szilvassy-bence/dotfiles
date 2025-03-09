@@ -304,6 +304,17 @@ use({
     end,
 })
 
+-- PhpActor
+-- PHP Refactoring Tools
+use({
+  'phpactor/phpactor',
+  ft = 'php',
+  run = 'composer install --no-dev --optimize-autoloader',
+  config = function()
+    vim.keymap.set('n', '<Leader>pm', ':PhpactorContextMenu<CR>')
+    vim.keymap.set('n', '<Leader>pn', ':PhpactorClassNew<CR>')
+  end,
+})
 
 -- ** FINAL PART **
 -- Automatically set up your configuration after cloning packer.nvim

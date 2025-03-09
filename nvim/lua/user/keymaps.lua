@@ -18,7 +18,10 @@ vim.keymap.set('v', 'y', 'myy`y')
 vim.keymap.set('n', 'q:', ':q')
 
 -- Paste replace visual selection without copying it.
-vim.keymap.set('v', 'p', '"_dP')
+vim.keymap.set('v', 'pp', '"_dP', { noremap = true, silent = true })
+
+-- Remap Ctrl+Q to enter visual block mode (instead of Ctrl+V)
+vim.api.nvim_set_keymap('n', '<C-q>', '<C-v>', { noremap = true, silent = true })
 
 -- Easy insertion of a trailing ; or , from insert mode.
 vim.keymap.set('i', ';;', '<Esc>A;')
@@ -46,8 +49,15 @@ vim.api.nvim_set_keymap('n', '<leader>xx', ':bdelete<CR>', { noremap = true, sil
 vim.keymap.set('n', '<leader>tt', ':Title<CR>', { noremap = true, silent = true })
 
 -- Move split
-vim.api.nvim_set_keymap('n', '<Leader>h', ':vertical resize -5<CR>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<Leader>l', ':vertical resize +5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>mh', ':vertical resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>ml', ':vertical resize +5<CR>', { noremap = true, silent = true })
+
+-- Copy the current file's absolute file path to the buffer
+vim.keymap.set('n', '<leader>cp', function()
+  local filename = vim.fn.expand("%:p") -- Get the full path of the current buffer
+  vim.fn.setreg("+", filename)           -- Set the clipboard register to the filename
+  print("Filename copied to clipboard: " .. filename) -- Optional: Display a message
+end, { noremap = true, silent = true })
 
 -- Links
 -- vim.keymap.set("n", "gl", function()
