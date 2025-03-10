@@ -6,14 +6,14 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 
 -- PHP
 require('lspconfig').intelephense.setup({ capabilities = capabilities })
-require('lspconfig').phpactor.setup({
-  capabilities = capabilities,
-  on_attach = on_attach,
-  init_options = {
-    ["language_server_phpstan.enabled"] = false,
-    ["language_server_psalm.enabled"] = false,
-  }
-})
+-- require('lspconfig').phpactor.setup({
+--   capabilities = capabilities,
+--   on_attach = on_attach,
+--   init_options = {
+--     ["language_server_phpstan.enabled"] = false,
+--     ["language_server_psalm.enabled"] = false,
+--   }
+-- })
 
 -- Clangd
 require('lspconfig').clangd.setup({
