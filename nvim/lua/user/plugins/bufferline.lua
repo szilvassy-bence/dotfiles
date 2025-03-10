@@ -51,6 +51,19 @@ require('bufferline').setup({
     close_button_selected = {
       fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
     },
+    numbers = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+    },
+    numbers_visible = {
+      bg = { attribute = 'bg', highlight = 'StatusLine' },
+      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+    },
+    numbers_selected = {
+      fg = { attribute = 'fg', highlight = 'StatusLineNonText' },
+      bold = true,
+      italic = true,
+    },
     buffer_visible = {
       bg = { attribute = 'bg', highlight = 'StatusLine' },
     },
