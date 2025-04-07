@@ -24,7 +24,7 @@ require('lualine').setup({
         color = { fg = '#1c1c1c' }
       },
       separator,
-      '"🖧  " .. tostring(#vim.tbl_keys(vim.lsp.buf_get_clients()))',
+      '"🖧  " .. tostring(#vim.tbl_keys(vim.lsp.get_clients()))',
       { 'diagnostics', sources = { 'nvim_diagnostic' } },
       separator,
     },

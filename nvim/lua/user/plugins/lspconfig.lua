@@ -5,15 +5,19 @@ require('mason-lspconfig').setup({ automatic_installation = true })
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- PHP
-require('lspconfig').intelephense.setup({ capabilities = capabilities })
--- require('lspconfig').phpactor.setup({
---   capabilities = capabilities,
---   on_attach = on_attach,
---   init_options = {
---     ["language_server_phpstan.enabled"] = false,
---     ["language_server_psalm.enabled"] = false,
---   }
--- })
+require('lspconfig').intelephense.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+})
+require('lspconfig').phpactor.setup({
+  capabilities = capabilities,
+  on_attach = on_attach,
+  init_options = {
+    ["language_server_phpstan.enabled"] = false,
+    ["language_server_psalm.enabled"] = false,
+  },
+  filetypes = { 'php' },
+})
 
 -- Clangd
 require('lspconfig').clangd.setup({
@@ -49,30 +53,29 @@ require('lspconfig').jsonls.setup({
   },
 })
 
--- null-ls
-require('null-ls').setup({
+-- none-ls
+local null_ls = require('null-ls')
+null_ls.setup({
   sources = {
-    require('null-ls').builtins.diagnostics.eslint_d.with({
+    null_ls.builtins.diagnostics.eslint_d.with({
       condition = function(utils)
         return utils.root_has_file({ '.eslintrc.js' })
       end,
     }),
-    require('null-ls').builtins.diagnostics.trail_space.with({ disabled_filetypes = { 'NvimTree' } }),
-    require('null-ls').builtins.formatting.eslint_d.with({
-      condition = function(utils)
-        return utils.root_has_file({ '.eslintrc.js' })
-      end,
-    }),
-    require('null-ls').builtins.formatting.prettierd,
+    null_ls.builtins.diagnostics.trail_space.with({ disabled_filetypes = { 'NvimTree' } }),
+    null_ls.builtins.formatting.prettierd,
+    null_ls.builtins.formatting.phpcsfixer,
   },
 })
+-- null-ls
 require('mason-null-ls').setup({ automatic_installation = true })
 
 -- Keymaps
 vim.keymap.set('n', '<Leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
 vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
 vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { buffer = true, desc = "Go to Definition" })
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+vim.keymap.set('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
 vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
 vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
 vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')

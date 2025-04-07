@@ -265,7 +265,7 @@ use({
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'b0o/schemastore.nvim',
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     'jayp0521/mason-null-ls.nvim',
     'neovim/nvim-lspconfig'
   },
@@ -315,6 +315,23 @@ use({
     vim.keymap.set('n', '<Leader>pn', ':PhpactorClassNew<CR>')
   end,
 })
+
+-- Project Configuration.
+ use({
+   'tpope/vim-projectionist',
+   requires = 'tpope/vim-dispatch',
+   config = function()
+     require('user/plugins/projectionist')
+   end,
+ })
+
+-- Testing helper
+ use({
+   'vim-test/vim-test',
+   config = function()
+     require('user/plugins/vim-test')
+   end,
+ })
 
 -- ** FINAL PART **
 -- Automatically set up your configuration after cloning packer.nvim

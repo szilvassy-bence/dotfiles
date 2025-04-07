@@ -27,6 +27,7 @@ vim.api.nvim_set_keymap('n', '<C-q>', '<C-v>', { noremap = true, silent = true }
 vim.keymap.set('i', ';;', '<Esc>A;')
 vim.keymap.set('i', ',,', '<Esc>A,')
 vim.keymap.set('i', '{{', '<Esc>A {}<Esc>i')
+vim.keymap.set('i', '==', '<Esc>A =<Esc>A ')
 
 -- Quickly clear search highlighting.
 vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>')
