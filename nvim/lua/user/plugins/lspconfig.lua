@@ -54,19 +54,19 @@ require('lspconfig').jsonls.setup({
 })
 
 -- none-ls
-local null_ls = require('null-ls')
-null_ls.setup({
-  sources = {
-    null_ls.builtins.diagnostics.eslint_d.with({
-      condition = function(utils)
-        return utils.root_has_file({ '.eslintrc.js' })
-      end,
-    }),
-    null_ls.builtins.diagnostics.trail_space.with({ disabled_filetypes = { 'NvimTree' } }),
-    null_ls.builtins.formatting.prettierd,
-    null_ls.builtins.formatting.phpcsfixer,
-  },
-})
+-- local null_ls = require('null-ls')
+-- null_ls.setup({
+--   sources = {
+--     null_ls.builtins.diagnostics.eslint_d.with({
+--       condition = function(utils)
+--         return utils.root_has_file({ '.eslintrc.js' })
+--       end,
+--     }),
+--     null_ls.builtins.diagnostics.trail_space.with({ disabled_filetypes = { 'NvimTree' } }),
+--     null_ls.builtins.formatting.prettierd,
+--     null_ls.builtins.formatting.phpcsfixer,
+--   },
+-- })
 -- null-ls
 require('mason-null-ls').setup({ automatic_installation = true })
 
