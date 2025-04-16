@@ -60,6 +60,11 @@ vim.keymap.set('n', '<leader>cp', function()
   print("Filename copied to clipboard: " .. filename) -- Optional: Display a message
 end, { noremap = true, silent = true })
 
+vim.api.nvim_set_keymap('n', '<Leader>uu', ':TransferUpload<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>us', ':TransferSync<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>ub', ':DiffRemote<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>ud', ':TransferDirDiff<CR>', {noremap = true, silent = true})
+
 -- Links
 -- vim.keymap.set("n", "gl", function()
 --   local link = vim.fn.expand("<cWORD>")
