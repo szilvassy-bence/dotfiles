@@ -223,6 +223,7 @@ local plugins = {
     config = function()
       vim.keymap.set('n', '<Leader>pm', ':PhpactorContextMenu<CR>')
       vim.keymap.set('n', '<Leader>pn', ':PhpactorClassNew<CR>')
+      vim.keymap.set('n', '<Leader>pt', ':PhpactorTransform<CR>')
     end,
   },
   {
@@ -256,8 +257,10 @@ local plugins = {
       },
     },
   },
+  {"rcarriga/nvim-notify"},
   {
     "coffebar/transfer.nvim",
+    lazy = true,
     cmd = { "TransferInit", "DiffRemote", "TransferUpload", "TransferDownload", "TransferDirDiff", "TransferRepeat" },
     opts = {
       upload_method = "rsync",
