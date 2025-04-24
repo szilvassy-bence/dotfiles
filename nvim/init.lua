@@ -1,3 +1,5 @@
+vim.cmd [[ let g:lazy_log_level = "trace" ]]
+
 require('user.plugins')
 require('user.options')
 require('user.keymaps')

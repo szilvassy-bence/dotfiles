@@ -108,8 +108,8 @@ local plugins = {
     end,
   },
   {
-    'kyazdani42/nvim-tree.lua',
-    dependencies = 'kyazdani42/nvim-web-devicons',
+    'nvim-tree/nvim-tree.lua',
+    dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
       require('user/plugins/nvim-tree')
     end,
@@ -258,9 +258,20 @@ local plugins = {
   },
   {
     "coffebar/transfer.nvim",
-    lazy = true,
     cmd = { "TransferInit", "DiffRemote", "TransferUpload", "TransferDownload", "TransferDirDiff", "TransferRepeat" },
-    opts = {},
+    opts = {
+      upload_method = "rsync",
+      upload_rsync_params = {
+        "-rlzi",
+        "--delete",
+        "--checksum",
+        "--exclude", ".git",
+        "--exclude", ".idea",
+        "--exclude", ".DS_Store",
+        "--exclude", ".nvim",
+        "--exclude", "*.pyc",
+      }
+    },
   },
 }
 
