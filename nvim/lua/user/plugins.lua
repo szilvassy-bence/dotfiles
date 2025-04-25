@@ -281,6 +281,7 @@ local plugins = {
         "--exclude", "storage/",
         "--exclude", "bootstrap/cache/",
         "--exclude", "bullshit/",
+        "--exclude", "public/",
       }
     },
   },
