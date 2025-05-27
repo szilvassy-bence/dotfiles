@@ -27,7 +27,6 @@ vim.api.nvim_set_keymap('n', '<C-q>', '<C-v>', { noremap = true, silent = true }
 vim.keymap.set('i', ';;', '<Esc>A;')
 vim.keymap.set('i', ',,', '<Esc>A,')
 vim.keymap.set('i', '{{', '<Esc>A {}<Esc>i')
-vim.keymap.set('i', '==', '<Esc>A =<Esc>A ')
 
 -- Quickly clear search highlighting.
 vim.keymap.set('n', '<Leader>k', ':nohlsearch<CR>')
@@ -42,6 +41,12 @@ vim.keymap.set('n', '<A-j>', ':move .+1<CR>==')
 vim.keymap.set('n', '<A-k>', ':move .-2<CR>==')
 vim.keymap.set('v', '<A-j>', ":move '>+1<CR>gv=gv")
 vim.keymap.set('v', '<A-k>', ":move '<-2<CR>gv=gv")
+
+-- Copy the current buffer's path
+vim.keymap.set('n', '<leader>cpp', function()
+  vim.fn.setreg('+', vim.fn.expand('%'))
+  print("Copied relative (to CWD) path to clipboard!")
+end, { desc = "Copy relative (to CWD) file path to clipboard" })
 
 -- Bufferline
 vim.api.nvim_set_keymap('n', '<leader>xo', ':BufferLineCloseOthers<CR>', { noremap = true, silent = true })
