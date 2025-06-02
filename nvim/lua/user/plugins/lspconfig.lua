@@ -1,22 +1,25 @@
--- Setup Mason to automatically install LSP servers
-require('mason').setup()
-require('mason-lspconfig').setup({ automatic_installation = true })
-
+local lspconfig = require('lspconfig')
+local mason = require('mason')
+local mason_lspconfig = require('mason-lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+-- Setup Mason to automatically install LSP servers
+mason.setup()
+mason_lspconfig.setup({ automatic_installation = true })
+
 -- PHP
-require('lspconfig').intelephense.setup({
+lspconfig.intelephense.setup({
   capabilities = capabilities,
   on_attach = on_attach,
 })
-require('lspconfig').phpactor.setup({
+lspconfig.phpactor.setup({
   capabilities = capabilities,
   on_attach = on_attach,
   filetypes = { 'php' },
 })
 
 -- Clangd
-require('lspconfig').clangd.setup({
+lspconfig.clangd.setup({
   capabilities = capabilities,
   on_attach = function(client, bufnr)
     -- Disable clangd's formatting capabilities to avoid conflicts
@@ -25,22 +28,25 @@ require('lspconfig').clangd.setup({
   end,
 })
 
--- Vue, JavaScript, TypeScript
-require('lspconfig').volar.setup({
-  capabilities = capabilities,
-  -- Enable "Take Over Mode" where volar will provide all JS/TS LSP services
-  -- This drastically improves the responsiveness of diagnostic updates on change
-  filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+lspconfig.ts_ls.setup({
+    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+    cmd = { "typescript-language-server", "--stdio" },
+    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+    single_file_support = true,
+})
+
+lspconfig.emmet_ls.setup({
+    filetypes = { "html", "blade", "css", "javascriptreact" },
 })
 
 -- BASH
-require('lspconfig').bashls.setup{
+lspconfig.bashls.setup{
   capabilities = capabilities,
   filetypes = { 'sh' },
 }
 
 -- JSON
-require('lspconfig').jsonls.setup({
+lspconfig.jsonls.setup({
   capabilities = capabilities,
   settings = {
     json = {
