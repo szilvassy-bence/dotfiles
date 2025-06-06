@@ -49,9 +49,33 @@ require('telescope').setup({
 pcall(require('telescope').load_extension, 'fzf')
 pcall(require('telescope').load_extension, 'live_grep_args')
 
-vim.keymap.set('n', '<leader>f', [[<cmd>lua require('telescope.builtin').find_files()<CR>]])
-vim.keymap.set('n', '<leader>F', [[<cmd>lua require('telescope.builtin').find_files({ no_ignore = true, prompt_title = 'All Files' })<CR>]])
-vim.keymap.set('n', '<leader>b', [[<cmd>lua require('telescope.builtin').buffers()<CR>]])
-vim.keymap.set('n', '<leader>g', [[<cmd>lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>]])
-vim.keymap.set('n', '<leader>h', [[<cmd>lua require('telescope.builtin').oldfiles()<CR>]])
-vim.keymap.set('n', '<leader>s', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]])
+local keymap = vim.keymap.set
+local builtin = require('telescope.builtin')
+local lga = require('telescope').extensions.live_grep_args
+local opts = function(desc) return { noremap = true, silent = true, desc = desc } end
+
+-- file search
+keymap('n', '<leader>f', builtin.find_files, { desc = 'Find files' })
+keymap('n', '<leader>F', function()
+  builtin.find_files({ no_ignore = true, prompt_title = 'All Files (no .gitignore)' })
+end, { desc = 'Find all files (no ignore)' })
+
+-- buffer & history
+keymap('n', '<leader>b', builtin.buffers, { desc = 'List of buffers' })
+keymap('n', '<leader>h', builtin.oldfiles, { desc = 'Recent files (history)' })
+
+-- grep
+keymap('n', '<leader>g', lga.live_grep_args, { desc = 'Grep with args (LGA)' })
+
+-- symbols in file
+keymap('n', '<leader>s', builtin.lsp_document_symbols, { desc = 'Document symbol (LSP)' })
+
+-- LSP navigation via Telescope
+keymap('n', 'gd', builtin.lsp_definitions, opts('Telescope: Go to definition'))
+keymap('n', 'gy', builtin.lsp_type_definitions, opts('Telescope: Go to type definition'))
+keymap('n', 'gi', builtin.lsp_implementations, opts('Telescope: Go to implementations'))
+keymap('n', 'gr', builtin.lsp_references, opts('Telescope: List references'))
+-- keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+-- keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+-- keymap('n', 'gi', ':Telescope lsp_implementations<CR>')
+-- keymap('n', 'gr', ':Telescope lsp_references<CR>')

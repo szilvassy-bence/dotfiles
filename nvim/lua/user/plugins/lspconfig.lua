@@ -72,16 +72,25 @@ lspconfig.jsonls.setup({
 -- null-ls
 require('mason-null-ls').setup({ automatic_installation = true })
 
--- Keymaps
-vim.keymap.set('n', '<Leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
-vim.keymap.set('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-vim.keymap.set('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
-vim.keymap.set('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
-vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
-vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
-vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-vim.keymap.set('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+local keymap = vim.keymap.set
+local opts = function(desc) return { noremap = true, silent = true, desc = desc } end
+local builtin = require('telescope.builtin')
+
+-- diagnostic
+keymap('n', '<Leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
+keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
+keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
+
+-- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+-- vim.keymap.set('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
+-- vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
+-- vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
+
+-- Other LSP features
+keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
+keymap('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
+
+-- Navigation commands are in Telescope plugin configuration
 
 -- Commands
 vim.api.nvim_create_user_command('Format', function()
