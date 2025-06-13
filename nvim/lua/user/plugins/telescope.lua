@@ -74,7 +74,14 @@ keymap('n', '<leader>s', builtin.lsp_document_symbols, { desc = 'Document symbol
 keymap('n', 'gd', builtin.lsp_definitions, opts('Telescope: Go to definition'))
 keymap('n', 'gy', builtin.lsp_type_definitions, opts('Telescope: Go to type definition'))
 keymap('n', 'gi', builtin.lsp_implementations, opts('Telescope: Go to implementations'))
-keymap('n', 'gr', builtin.lsp_references, opts('Telescope: List references'))
+keymap('n', 'gr', function()
+  builtin.lsp_references({
+    layout_strategy = 'horizontal',
+    layout_config = { horizontal = { preview_width = 0.5 } },
+    previewer = true,
+  })
+end, opts('Telescope: List references'))
+
 -- keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
 -- keymap('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
 -- keymap('n', 'gi', ':Telescope lsp_implementations<CR>')
