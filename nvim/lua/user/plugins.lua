@@ -148,6 +148,7 @@ local plugins = {
       vim.keymap.set('n', 'gS', ':Gitsigns undo_stage_hunk<CR>')
       vim.keymap.set('n', 'gp', ':Gitsigns preview_hunk<CR>')
       vim.keymap.set('n', 'gb', ':Gitsigns blame_line<CR>')
+      vim.keymap.set('n', 'gR', ':Gitsigns reset_hunk<CR>')
     end,
   },
   {
@@ -347,6 +348,16 @@ local plugins = {
         ft = { "markdown", "Avante" },
       },
     },
+  },
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      { "nvim-neotest/nvim-nio" },
+      { "rcarriga/nvim-dap-ui" },
+    },
+    config = function()
+      require('user/plugins/dap')
+    end,
   }
 }
 

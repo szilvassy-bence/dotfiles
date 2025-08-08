@@ -57,6 +57,8 @@ vim.keymap.set('n', '<leader>tt', ':Title<CR>', { noremap = true, silent = true 
 -- Move split
 vim.api.nvim_set_keymap('n', '<Leader>mh', ':vertical resize -15<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>ml', ':vertical resize +15<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>mj', ':horizontal resize -5<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<Leader>mk', ':horizontal resize +5<CR>', { noremap = true, silent = true })
 
 -- Copy the current file's absolute file path to the buffer
 vim.keymap.set('n', '<leader>cp', function()
@@ -66,6 +68,7 @@ vim.keymap.set('n', '<leader>cp', function()
 end, { noremap = true, silent = true })
 
 vim.api.nvim_set_keymap('n', '<Leader>uu', ':TransferUpload .<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>uf', ':TransferUpload<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>us', ':TransferSync<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>ub', ':DiffRemote<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>ud', ':TransferDirDiff<CR>', {noremap = true, silent = true})

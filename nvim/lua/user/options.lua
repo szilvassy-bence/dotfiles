@@ -35,7 +35,7 @@ vim.opt.splitright = true
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
 
-vim.opt.fileformats = { "unix", "dos" }  -- recognize both
+vim.opt.fileformats = { "unix" }  -- recognize both
 vim.opt.clipboard = 'unnamedplus' -- Use system clipboard
 
 vim.opt.confirm = true -- ask for confirmation instead of erroring
