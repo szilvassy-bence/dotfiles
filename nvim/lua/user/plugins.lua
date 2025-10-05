@@ -285,6 +285,22 @@ local plugins = {
         "--exclude", "public/",
       }
     },
+    config = function(_, opts)
+      local transfer = require("transfer")
+      transfer.setup(opts)
+
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        callback = function()
+          local project_root = vim.fn.getcwd()
+          local deployment_file = project_root .. "/.nvim/deployment.lua"
+
+          if vim.fn.filereadable(deployment_file) == 1 then
+            -- Ha létezik deployment fájl, futtatjuk a feltöltést
+            vim.cmd("TransferUpload")
+          end
+        end,
+      })
+    end,
   },
   {
     "yetone/avante.nvim",
@@ -306,6 +322,10 @@ local plugins = {
           }
         }
       }
+    },
+    context = {
+      default = "project",  -- lehet: "none", "file", "project"
+      filename = ".context.avante.md", -- ezt keresi a projekt gyökerében
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",
