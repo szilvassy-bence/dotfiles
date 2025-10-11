@@ -1,4 +1,4 @@
-local separator = { '"▏"', color = 'StatusLineNonText' }
+local separator = { '"▏"' }
 require('lualine').setup({
   options = {
     section_separators = '',
@@ -32,10 +32,7 @@ require('lualine').setup({
       'filename'
     },
     lualine_x = {
-      {
-        'filetype',
-        color =  { fg = '#1c1c1c' },
-      },
+      'filetype',
       'encoding',
       'fileformat',
     },

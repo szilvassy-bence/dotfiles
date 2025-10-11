@@ -1,96 +1,147 @@
-local lspconfig = require('lspconfig')
 local mason = require('mason')
 local mason_lspconfig = require('mason-lspconfig')
+local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 -- Setup Mason to automatically install LSP servers
 mason.setup()
 mason_lspconfig.setup({ automatic_installation = true })
 
+local on_attach = function(client, bufnr)
+  vim.lsp.default_keymaps({ buffer = bufnr })
+
+  local keymap = vim.keymap.set
+  local opts = { buffer = bufnr, noremap = true, silent = true }
+
+  -- DEFAULT MAPPINGS
+  -- "gra" is mapped in Normal and Visual mode to vim.lsp.buf.code_action()
+  -- "gri" is mapped in Normal mode to vim.lsp.buf.implementation()
+  -- "grn" is mapped in Normal mode to vim.lsp.buf.rename()
+  -- "grr" is mapped in Normal mode to vim.lsp.buf.references()
+  -- "grt" is mapped in Normal mode to vim.lsp.buf.type_definition()
+  -- "gO" is mapped in Normal mode to vim.lsp.buf.document_symbol()
+  -- CTRL-S is mapped in Insert mode to vim.lsp.buf.signature_help()
+  -- "an" and "in" are mapped in Visual mode to outer and inner incremental selections, respectively, using vim.lsp.buf.selection_range()
+
+  keymap('n', 'gi', require('telescope.builtin').lsp_implementations, opts)
+  keymap('n', 'gr', require('telescope.builtin').lsp_references, opts)
+  keymap('n', 'gy', require('telescope.builtin').lsp_type_definitions, opts)
+  keymap('n', 'gd', require('telescope.builtin').lsp_definitions, opts)
+
+  if client.name == "intelephense" or client.name == "phpactor" then
+    -- insert-mode completion bekapcsolása
+    vim.lsp.completion.enable(true, client.id, bufnr, {
+      autotrigger = true,  -- automatikusan feljön a menü a trigger karaktereknél
+    })
+  end
+
+  if client.name == "intelephense" then
+    vim.lsp.inline_completion.enable(true, client.id, bufnr, {
+      autotrigger = true,   -- automatikus javaslat gépeléskor
+      debounce = 100,       -- (opcionális) ms-ben, mennyi ideig várjon a trigger után
+      highlight = "Comment" -- ghost text színe
+    })
+
+    -- Manual trigger: Ctrl+Space
+    keymap("i", "<C-Space>", function()
+      vim.lsp.inline_completion.get()
+    end, { buffer = bufnr, desc = "Trigger inline completion" })
+  end
+
+end
+
+-- vim.lsp.config('copilot', {
+--   cmd = { 'copilot-language-server', '--stdio', },
+--   root_markers = { '.git' },
+-- })
+-- vim.lsp.enable("copilot")
+
 -- PHP
-lspconfig.intelephense.setup({
-  capabilities = capabilities,
+vim.lsp.config("intelephense", {
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
   on_attach = on_attach,
 })
-lspconfig.phpactor.setup({
+vim.lsp.enable("intelephense")
+
+vim.lsp.config("phpactor", {
   capabilities = capabilities,
   on_attach = on_attach,
   filetypes = { 'php' },
 })
+vim.lsp.enable("phpactor")
 
 -- Clangd
-lspconfig.clangd.setup({
+vim.lsp.config("clangd", {
   capabilities = capabilities,
   on_attach = function(client, bufnr)
     -- Disable clangd's formatting capabilities to avoid conflicts
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
+    vim.lsp.default_keymaps({ buffer = bufnr })
   end,
 })
+vim.lsp.enable("clangd")
 
-lspconfig.ts_ls.setup({
-    filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-    cmd = { "typescript-language-server", "--stdio" },
-    root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
-    single_file_support = true,
+vim.lsp.config("ts_ls", {
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  cmd = { "typescript-language-server", "--stdio" },
+  root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+  single_file_support = true,
+  on_attach = on_attach,
+  capabilities = capabilities
 })
+vim.lsp.enable("ts_ls")
 
-lspconfig.emmet_ls.setup({
-    filetypes = { "html", "blade", "css", "javascriptreact" },
+vim.lsp.config("emmet_ls", {
+  capabilities = capabilities,
+  filetypes = { "html", "blade", "css", "javascriptreact" },
+  on_attach = on_attach
 })
+vim.lsp.enable("emmet_ls")
 
 -- BASH
-lspconfig.bashls.setup{
+vim.lsp.config("bashls", {
   capabilities = capabilities,
   filetypes = { 'sh' },
-}
+  on_attach = on_attach
+})
+vim.lsp.enable("bashls")
 
 -- JSON
-lspconfig.jsonls.setup({
+vim.lsp.config("jsonls", {
   capabilities = capabilities,
+  on_attach = on_attach,
   settings = {
     json = {
       schemas = require('schemastore').json.schemas(),
     },
   },
 })
+vim.lsp.enable("jsonls")
 
--- none-ls
--- local null_ls = require('null-ls')
--- null_ls.setup({
---   sources = {
---     null_ls.builtins.diagnostics.eslint_d.with({
---       condition = function(utils)
---         return utils.root_has_file({ '.eslintrc.js' })
---       end,
---     }),
---     null_ls.builtins.diagnostics.trail_space.with({ disabled_filetypes = { 'NvimTree' } }),
---     null_ls.builtins.formatting.prettierd,
---     null_ls.builtins.formatting.phpcsfixer,
---   },
--- })
--- null-ls
+vim.lsp.config("copilot", {
+  cmd = { "copilot-language-server", "--stdio", },
+  root_markers = { '.git' },
+})
+vim.lsp.enable("copilot")
+
 require('mason-null-ls').setup({ automatic_installation = true })
 
-local keymap = vim.keymap.set
-local opts = function(desc) return { noremap = true, silent = true, desc = desc } end
-local builtin = require('telescope.builtin')
+vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+  local client = vim.lsp.get_client_by_id(ctx.client_id)
+  local types = {
+    [vim.lsp.protocol.MessageType.Error] = vim.log.levels.ERROR,
+    [vim.lsp.protocol.MessageType.Warning] = vim.log.levels.WARN,
+    [vim.lsp.protocol.MessageType.Info] = vim.log.levels.INFO,
+    [vim.lsp.protocol.MessageType.Log] = vim.log.levels.DEBUG,
+  }
+  local level = types[result.type] or vim.log.levels.INFO
 
--- diagnostic
-keymap('n', '<Leader>d', '<cmd>lua vim.diagnostic.open_float()<CR>')
-keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>')
-keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>')
-
--- vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
--- vim.keymap.set('n', 'gy', '<cmd>lua vim.lsp.buf.type_definition()<CR>')
--- vim.keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
--- vim.keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
-
--- Other LSP features
-keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>')
-keymap('n', '<Leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>')
-
--- Navigation commands are in Telescope plugin configuration
+  -- Csak WARNING és ERROR mutatása
+  if level >= vim.log.levels.WARN then
+    vim.notify(result.message, level)
+  end
+end
 
 -- Commands
 vim.api.nvim_create_user_command('Format', function()
