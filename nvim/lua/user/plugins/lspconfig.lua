@@ -8,21 +8,16 @@ mason.setup()
 mason_lspconfig.setup({ automatic_installation = true })
 
 local on_attach = function(client, bufnr)
-  vim.lsp.default_keymaps({ buffer = bufnr })
-
   local keymap = vim.keymap.set
   local opts = { buffer = bufnr, noremap = true, silent = true }
 
-  -- DEFAULT MAPPINGS
-  -- "gra" is mapped in Normal and Visual mode to vim.lsp.buf.code_action()
-  -- "gri" is mapped in Normal mode to vim.lsp.buf.implementation()
-  -- "grn" is mapped in Normal mode to vim.lsp.buf.rename()
-  -- "grr" is mapped in Normal mode to vim.lsp.buf.references()
-  -- "grt" is mapped in Normal mode to vim.lsp.buf.type_definition()
-  -- "gO" is mapped in Normal mode to vim.lsp.buf.document_symbol()
-  -- CTRL-S is mapped in Insert mode to vim.lsp.buf.signature_help()
-  -- "an" and "in" are mapped in Visual mode to outer and inner incremental selections, respectively, using vim.lsp.buf.selection_range()
-
+  keymap('n', 'gra', vim.lsp.buf.code_action, opts)
+  keymap('n', 'gri', vim.lsp.buf.implementation, opts)
+  keymap('n', 'grn', vim.lsp.buf.rename, opts)
+  keymap('n', 'grr', vim.lsp.buf.references, opts)
+  keymap('n', 'grt', vim.lsp.buf.type_definition, opts)
+  keymap('n', 'gO', vim.lsp.buf.document_symbol, opts)
+  keymap('i', '<C-S>', vim.lsp.buf.signature_help, opts)
   keymap('n', 'gi', require('telescope.builtin').lsp_implementations, opts)
   keymap('n', 'gr', require('telescope.builtin').lsp_references, opts)
   keymap('n', 'gy', require('telescope.builtin').lsp_type_definitions, opts)
@@ -35,18 +30,18 @@ local on_attach = function(client, bufnr)
     })
   end
 
-  if client.name == "intelephense" then
-    vim.lsp.inline_completion.enable(true, client.id, bufnr, {
-      autotrigger = true,   -- automatikus javaslat gépeléskor
-      debounce = 100,       -- (opcionális) ms-ben, mennyi ideig várjon a trigger után
-      highlight = "Comment" -- ghost text színe
-    })
+  -- if client.name == "intelephense" then
+  --   vim.lsp.inline_completion.enable(true, client.id, bufnr, {
+  --     autotrigger = true,   -- automatikus javaslat gépeléskor
+  --     debounce = 100,       -- (opcionális) ms-ben, mennyi ideig várjon a trigger után
+  --     highlight = "Comment" -- ghost text színe
+  --   })
 
-    -- Manual trigger: Ctrl+Space
-    keymap("i", "<C-Space>", function()
-      vim.lsp.inline_completion.get()
-    end, { buffer = bufnr, desc = "Trigger inline completion" })
-  end
+  --   -- Manual trigger: Ctrl+Space
+  --   keymap("i", "<C-Space>", function()
+  --     vim.lsp.inline_completion.get()
+  --   end, { buffer = bufnr, desc = "Trigger inline completion" })
+  -- end
 
 end
 
