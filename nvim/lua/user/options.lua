@@ -2,6 +2,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.softtabstop = 4
+vim.opt.textwidth=100
 
 vim.opt.cursorline = true
 vim.opt.number = true
@@ -13,6 +14,12 @@ vim.opt.wrap = true
 
 vim.opt.wildmode = 'longest:full,full' -- complete the longest common match, and allow tabbing the results to fully complete them
 vim.opt.completeopt = 'menuone,longest,preview'
+
+vim.opt.foldcolumn="1"
+vim.opt.foldenable=true
+vim.opt.foldlevel=99
+vim.opt.foldlevelstart=99
+vim.opt.foldmethod="indent"
 
 vim.opt.title = true
 
