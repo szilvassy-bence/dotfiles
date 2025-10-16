@@ -22,13 +22,16 @@ local on_attach = function(client, bufnr)
   keymap('n', 'gr', require('telescope.builtin').lsp_references, opts)
   keymap('n', 'gy', require('telescope.builtin').lsp_type_definitions, opts)
   keymap('n', 'gd', require('telescope.builtin').lsp_definitions, opts)
+  vim.keymap.set('n', '<leader>d', function()
+    vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })
+  end, { desc = 'Show diagnostics under cursor' })
 
-  if client.name == "intelephense" or client.name == "phpactor" then
-    -- insert-mode completion bekapcsolása
-    vim.lsp.completion.enable(true, client.id, bufnr, {
-      autotrigger = true,  -- automatikusan feljön a menü a trigger karaktereknél
-    })
-  end
+  -- if client.name == "intelephense" or client.name == "phpactor" then
+  --   -- insert-mode completion bekapcsolása
+  --   vim.lsp.completion.enable(true, client.id, bufnr, {
+  --     autotrigger = true,  -- automatikusan feljön a menü a trigger karaktereknél
+  --   })
+  -- end
 
   -- if client.name == "intelephense" then
   --   vim.lsp.inline_completion.enable(true, client.id, bufnr, {
