@@ -45,6 +45,19 @@ vim.opt.sidescrolloff = 8
 vim.opt.fileformats = { "unix" }  -- recognize both
 vim.opt.clipboard = 'unnamedplus' -- Use system clipboard
 
+vim.g.clipboard = {
+  name = 'WslClipboard',
+  copy = {
+    ["+"] = 'clip.exe',
+    ["*"] = 'clip.exe',
+  },
+  paste = {
+    ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+  },
+  cache_enabled = 0,
+}
+
 vim.opt.confirm = true -- ask for confirmation instead of erroring
 
 vim.opt.undofile = true -- persistent undo

@@ -67,6 +67,27 @@ keymap('n', '<leader>h', builtin.oldfiles, { desc = 'Recent files (history)' })
 -- grep
 keymap('n', '<leader>g', lga.live_grep_args, { desc = 'Grep with args (LGA)' })
 
+-- grep on a register
+local function grep_register(reg)
+  local text = vim.fn.getreg(reg)
+  lga.live_grep_args({default_text = text})
+end
+keymap('n', '<leader>r', function ()
+  local reg = vim.fn.getcharstr()
+  if reg:match("%a") then
+    grep_register(reg)
+  else
+    print("Invalid register: "..reg)
+  end
+end, { desc = "Live grep from chosen register" })
+
+
+keymap('n', '<leader>fg', function()
+  builtin.live_grep({
+    search_dirs = { vim.fn.expand('%:p:h') }, -- current file dir
+  })
+end, { desc = 'Live grep current file directory' })
+
 -- symbols in file
 keymap('n', '<leader>s', builtin.lsp_document_symbols, { desc = 'Document symbol (LSP)' })
 

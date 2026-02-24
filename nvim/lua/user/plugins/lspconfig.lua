@@ -80,15 +80,20 @@ vim.lsp.config("clangd", {
 })
 vim.lsp.enable("clangd")
 
-vim.lsp.config("ts_ls", {
-  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-  cmd = { "typescript-language-server", "--stdio" },
-  root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
-  single_file_support = true,
+-- vim.lsp.config("tsserver", {
+--   filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+--   cmd = { "typescript-language-server", "--stdio" },
+--   root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+--   single_file_support = true,
+--   on_attach = on_attach,
+--   capabilities = capabilities
+-- })
+-- vim.lsp.enable("tsserver")
+
+lspconfig.tsserver.setup({
   on_attach = on_attach,
-  capabilities = capabilities
+  capabilities = capabilities,
 })
-vim.lsp.enable("ts_ls")
 
 vim.lsp.config("emmet_ls", {
   capabilities = capabilities,
@@ -104,18 +109,6 @@ vim.lsp.config("bashls", {
   on_attach = on_attach
 })
 vim.lsp.enable("bashls")
-
--- JSON
-vim.lsp.config("jsonls", {
-  capabilities = capabilities,
-  on_attach = on_attach,
-  settings = {
-    json = {
-      schemas = require('schemastore').json.schemas(),
-    },
-  },
-})
-vim.lsp.enable("jsonls")
 
 vim.lsp.config("copilot", {
   cmd = { "copilot-language-server", "--stdio", },
