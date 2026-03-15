@@ -1,0 +1,62 @@
+### Add to PATH
+export PATH=~/.local/bin:"$PATH"
+export PATH=~/code/dotfiles:"$PATH"
+export PATH=~/.config/composer/vendor/bin:"$PATH"
+export PATH=~/bin:"$PATH"
+
+###
+# Editor config
+export EDITOR="nvim"
+export VISUAL="nvim"
+export DISPLAY=:0
+
+###
+# Oh my posh config
+POSH_THEME_DIR=$HOME/.cache/oh-my-posh/themes
+POSH_THEME_PATH=$POSH_THEME_DIR/dracula-custom.omp.json
+
+if [[ -f "$POSH_THEME_PATH" ]]; then
+	eval "$(oh-my-posh init bash --config $POSH_THEME_PATH)" >> ~/.bashrc
+	echo "Oh-my-posh configured"
+else
+	echo "Oh-my-posh config file not found: $POSH_THEME_PATH"
+fi
+
+###
+# Nvm config
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+
+gidi() {
+    git diff "$@"
+}
+
+gidiom() {
+    git diff origin/master
+}
+
+giad() {
+    git add "$@"
+}
+
+gicom() {
+    git commit -m "$@"
+}
+
+gico() {
+    git checkout "$@"
+}
+
+girest() {
+    git restore "$@"
+}
+
+alias gist='git st'
+alias gife='git fetch'
+alias gipul='git pull'
+alias gipus='git push'
+
+alias nvim_v12="NVIM_APPNAME=nvim_v12 ~/bin/nvim_v12"

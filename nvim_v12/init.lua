@@ -740,10 +740,10 @@ vim.lsp.config['ts_ls'] = {
 -- Automatikus LSP indítás PHP fájl megnyitásakor
 vim.lsp.enable({
 	'bashls',
-    'clangd',
-    'intelephense',
-    'lua_ls',
-    'phpactor',
+	'clangd',
+	'intelephense',
+	'lua_ls',
+	'phpactor',
 	'ts_ls',
 })
 
@@ -857,7 +857,7 @@ end, { noremap = true, silent = true, desc = "Close floating terminal" })
 local ls = require("luasnip")
 require("luasnip.loaders.from_lua").load({paths = "~/.config/nvim_v12/snippets/"})
 vim.keymap.set({ "i", "s" }, "<C-k>", function()
-    if ls.expand_or_jumpable() then
-        ls.expand_or_jump()
-    end
+	if ls.expand_or_jumpable() then
+		ls.expand_or_jump()
+	end
 end, { silent = true })

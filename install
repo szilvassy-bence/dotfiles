@@ -9,6 +9,7 @@ SCRIPTS_SOURCE_DIR=$DOTFILES/scripts
 SCRIPTS_DEST_DIR=$HOME/.local/bin
 OH_MY_POSH_FILE=$DOTFILES/oh-my-posh/dracula-custom.omp.json
 SNIPPETS=$DOTFILES/snippets
+SB_ALIASES=$DOTFILES/.sb_bashrc
 
 # Tmux
 if [[ -f $TMUX_FILE ]]; then
@@ -90,4 +91,11 @@ else
     echo "Oh-my-posh config file cannot be loaded"
 fi
 
-
+# sb aliases
+if [[ -f $SB_ALIASES ]]; then
+    rm -rf "$HOME"/.sb_bashrc
+    ln -s "$SB_ALIASES" "$HOME"/.sb_bashrc
+    echo "Sb aliases is loaded"
+else
+    echo "Sb aliases cannot be loaded"
+fi
