@@ -3,10 +3,12 @@
 DOTFILES=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 TMUX_FILE=$DOTFILES/tmux/tmux.conf
 NEOVIM_DIR=$DOTFILES/nvim
+NV12_CONFIG_SRC=$DOTFILES/nvim_v12
 PHPACTOR_DIR=$DOTFILES/phpactor
 SCRIPTS_SOURCE_DIR=$DOTFILES/scripts
 SCRIPTS_DEST_DIR=$HOME/.local/bin
 OH_MY_POSH_FILE=$DOTFILES/oh-my-posh/dracula-custom.omp.json
+SNIPPETS=$DOTFILES/snippets
 
 # Tmux
 if [[ -f $TMUX_FILE ]]; then
@@ -26,6 +28,14 @@ else
     echo "Neovim config file cannot be loaded"
 fi
 
+if [[ -d "$NV12_CONFIG_SRC" ]]; then
+    rm -rf "$HOME"/.config/nvim_v12
+    ln -s "$NV12_CONFIG_SRC" "$HOME"/.config/nvim_v12
+    echo "Neovim v0.12 config linked"
+else
+    echo "Neovim v0.12 config file cannot be loaded"
+fi
+
 # PhpActor
 if [[ -d "$PHPACTOR_DIR" ]]; then
     rm -rf "$HOME"/.config/phpactor
@@ -33,6 +43,15 @@ if [[ -d "$PHPACTOR_DIR" ]]; then
     echo "PhpActor config file is loaded"
 else
     echo "PhpActor config file cannot be loaded"
+fi
+
+# Snippets
+if [[ -d "$SNIPPETS" ]]; then
+    rm -rf "$HOME"/.config/nvim_v12/snippets
+    ln -s "$SNIPPETS" "$HOME"/.config/nvim_v12/snippets
+    echo "Snippets config file is loaded"
+else
+    echo "Snippets config file cannot be loaded"
 fi
 
 # Scripts
