@@ -10,6 +10,7 @@ SCRIPTS_DEST_DIR=$HOME/.local/bin
 OH_MY_POSH_FILE=$DOTFILES/oh-my-posh/dracula-custom.omp.json
 SNIPPETS=$DOTFILES/snippets
 SB_ALIASES=$DOTFILES/.sb_bashrc
+LUA_DIR=$DOTFILES/lua
 
 # Tmux
 if [[ -f $TMUX_FILE ]]; then
@@ -44,15 +45,6 @@ if [[ -d "$PHPACTOR_DIR" ]]; then
     echo "PhpActor config file is loaded"
 else
     echo "PhpActor config file cannot be loaded"
-fi
-
-# Snippets
-if [[ -d "$SNIPPETS" ]]; then
-    rm -rf "$HOME"/.config/nvim_v12/snippets
-    ln -s "$SNIPPETS" "$HOME"/.config/nvim_v12/snippets
-    echo "Snippets config file is loaded"
-else
-    echo "Snippets config file cannot be loaded"
 fi
 
 # Scripts

@@ -1,5 +1,5 @@
 vim.opt.termguicolors = true
-vim.cmd.colorscheme("habamax")
+vim.cmd.colorscheme("vim")
 vim.opt.winborder = "rounded"
 
 -- ============================================================================
@@ -256,6 +256,7 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Half page up (centered)" })
 vim.keymap.set("x", "<leader>p", '"_dP', { desc = "Paste without yanking" })
 vim.keymap.set({ "n", "v" }, "<leader>x", '"_d', { desc = "Delete without yanking" })
 
+vim.keymap.set('n', '<C-q>', '<C-v>', { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>bn", ":bnext<CR>", { desc = "Next buffer" })
 vim.keymap.set("n", "<leader>bp", ":bprevious<CR>", { desc = "Previous buffer" })
 
@@ -295,110 +296,6 @@ end, { desc = "Copy full file path" })
 vim.keymap.set("n", "<leader>td", function()
 	vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle diagnostics" })
-
-
--- ============================================================================
--- AUTOCMDS
--- ============================================================================
-
-local augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
-
--- Format on save (ONLY real file buffers, ONLY when efm is attached)
-vim.api.nvim_create_autocmd("BufWritePre", {
-	group = augroup,
-	pattern = {
-        "*.bash",
-        "*.c",
-        "*.cpp",
-        "*.css",
-		"*.go",
-        "*.h",
-        "*.hpp",
-        "*.html",
-        "*.js",
-        "*.json",
-        "*.jsx",
-        "*.lua",
-        "*.php",
-        "*.py",
-        "*.scss",
-		"*.sh",
-        "*.ts",
-        "*.tsx",
-		"*.zsh",
-	},
-	callback = function(args)
-		-- avoid formatting non-file buffers (helps prevent weird write prompts)
-		if vim.bo[args.buf].buftype ~= "" then
-			return
-		end
-		if not vim.bo[args.buf].modifiable then
-			return
-		end
-		if vim.api.nvim_buf_get_name(args.buf) == "" then
-			return
-		end
-
-		local has_efm = false
-		for _, c in ipairs(vim.lsp.get_clients({ bufnr = args.buf })) do
-			if c.name == "efm" then
-				has_efm = true
-				break
-			end
-		end
-		if not has_efm then
-			return
-		end
-
-		pcall(vim.lsp.buf.format, {
-			bufnr = args.buf,
-			timeout_ms = 2000,
-			filter = function(c)
-				return c.name == "efm"
-			end,
-		})
-	end,
-})
-
--- highlight yanked text
-vim.api.nvim_create_autocmd("TextYankPost", {
-	group = augroup,
-	callback = function()
-		vim.hl.on_yank()
-	end,
-})
-
--- return to last cursor position
-vim.api.nvim_create_autocmd("BufReadPost", {
-	group = augroup,
-	desc = "Restore last cursor position",
-	callback = function()
-		if vim.o.diff then -- except in diff mode
-			return
-		end
-
-		local last_pos = vim.api.nvim_buf_get_mark(0, '"') -- {line, col}
-		local last_line = vim.api.nvim_buf_line_count(0)
-
-		local row = last_pos[1]
-		if row < 1 or row > last_line then
-			return
-		end
-
-		pcall(vim.api.nvim_win_set_cursor, 0, last_pos)
-	end,
-})
-
--- wrap, linebreak and spellcheck on markdown and text files
-vim.api.nvim_create_autocmd("FileType", {
-	group = augroup,
-	pattern = { "markdown", "text", "gitcommit" },
-	callback = function()
-		vim.opt_local.wrap = true
-		vim.opt_local.linebreak = true
-		vim.opt_local.spell = true
-	end,
-})
 
 
 -- ============================================================================
@@ -474,6 +371,9 @@ end, { desc = "FZF Buffers" })
 vim.keymap.set("n", "<leader>fh", function()
 	require("fzf-lua").help_tags()
 end, { desc = "FZF Help Tags" })
+vim.keymap.set("n", "<leader>fr", function()
+	require("fzf-lua").oldfiles()
+end, { desc = "FZF Diagnostics Workspace" })
 vim.keymap.set("n", "<leader>fx", function()
 	require("fzf-lua").diagnostics_document()
 end, { desc = "FZF Diagnostics Document" })
@@ -861,3 +761,130 @@ vim.keymap.set({ "i", "s" }, "<C-k>", function()
 		ls.expand_or_jump()
 	end
 end, { silent = true })
+
+
+-- ----------------
+-- Deployment
+-- ----------------
+
+local deploy = require("deploy")
+
+vim.keymap.set("n", "<leader>uu", function()
+  deploy.upload_project()
+end, { desc = "Upload project" })
+
+vim.keymap.set("n", "<leader>uf", function()
+  deploy.upload_file()
+end, { desc = "Upload current file" })
+
+-- ============================================================================
+-- AUTOCMDS
+-- ============================================================================
+
+local augroup = vim.api.nvim_create_augroup("UserConfig", { clear = true })
+
+-- Format on save (ONLY real file buffers, ONLY when efm is attached)
+vim.api.nvim_create_autocmd("BufWritePre", {
+	group = augroup,
+	pattern = {
+	"*.bash",
+	"*.c",
+	"*.cpp",
+	"*.css",
+		"*.go",
+	"*.h",
+	"*.hpp",
+	"*.html",
+	"*.js",
+	"*.json",
+	"*.jsx",
+	"*.lua",
+	"*.php",
+	"*.py",
+	"*.scss",
+		"*.sh",
+	"*.ts",
+	"*.tsx",
+		"*.zsh",
+	},
+	callback = function(args)
+		-- avoid formatting non-file buffers (helps prevent weird write prompts)
+		if vim.bo[args.buf].buftype ~= "" then
+			return
+		end
+		if not vim.bo[args.buf].modifiable then
+			return
+		end
+		if vim.api.nvim_buf_get_name(args.buf) == "" then
+			return
+		end
+
+		local has_efm = false
+		for _, c in ipairs(vim.lsp.get_clients({ bufnr = args.buf })) do
+			if c.name == "efm" then
+				has_efm = true
+				break
+			end
+		end
+		if not has_efm then
+			return
+		end
+
+		pcall(vim.lsp.buf.format, {
+			bufnr = args.buf,
+			timeout_ms = 2000,
+			filter = function(c)
+				return c.name == "efm"
+			end,
+		})
+	end,
+})
+
+local deploy_group = vim.api.nvim_create_augroup("native_deploy", { clear = true })
+vim.api.nvim_create_autocmd("BufWritePost", {
+  group = deploy_group,
+  callback = function(ev)
+    deploy.upload_file(ev.buf)
+  end,
+})
+
+-- highlight yanked text
+vim.api.nvim_create_autocmd("TextYankPost", {
+	group = augroup,
+	callback = function()
+		vim.hl.on_yank()
+	end,
+})
+
+-- return to last cursor position
+vim.api.nvim_create_autocmd("BufReadPost", {
+	group = augroup,
+	desc = "Restore last cursor position",
+	callback = function()
+		if vim.o.diff then -- except in diff mode
+			return
+		end
+
+		local last_pos = vim.api.nvim_buf_get_mark(0, '"') -- {line, col}
+		local last_line = vim.api.nvim_buf_line_count(0)
+
+		local row = last_pos[1]
+		if row < 1 or row > last_line then
+			return
+		end
+
+		pcall(vim.api.nvim_win_set_cursor, 0, last_pos)
+	end,
+})
+
+-- wrap, linebreak and spellcheck on markdown and text files
+vim.api.nvim_create_autocmd("FileType", {
+	group = augroup,
+	pattern = { "markdown", "text", "gitcommit" },
+	callback = function()
+		vim.opt_local.wrap = true
+		vim.opt_local.linebreak = true
+		vim.opt_local.spell = true
+	end,
+})
+
