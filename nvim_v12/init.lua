@@ -1,5 +1,5 @@
 vim.opt.termguicolors = true
-vim.cmd.colorscheme("vim")
+vim.cmd.colorscheme("slate")
 vim.opt.winborder = "rounded"
 
 -- ============================================================================
@@ -371,7 +371,7 @@ end, { desc = "FZF Buffers" })
 vim.keymap.set("n", "<leader>fh", function()
 	require("fzf-lua").help_tags()
 end, { desc = "FZF Help Tags" })
-vim.keymap.set("n", "<leader>fr", function()
+vim.keymap.set("n", "<leader>fo", function()
 	require("fzf-lua").oldfiles()
 end, { desc = "FZF Diagnostics Workspace" })
 vim.keymap.set("n", "<leader>fx", function()

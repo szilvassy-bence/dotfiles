@@ -87,7 +87,6 @@ end
 function M.upload_project()
   local cfg = load_config(0)
   if not cfg then
-    notify("Nincs .nvim/deploy_conf.lua a projektben", vim.log.levels.WARN)
     return
   end
 
@@ -101,7 +100,6 @@ end
 function M.upload_file()
   local cfg = load_config(0)
   if not cfg then
-    notify("Nincs .nvim/deploy_conf.lua a projektben", vim.log.levels.WARN)
     return
   end
 
