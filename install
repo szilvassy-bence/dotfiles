@@ -3,7 +3,7 @@
 DOTFILES=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
 TMUX_FILE=$DOTFILES/tmux/tmux.conf
 NEOVIM_DIR=$DOTFILES/nvim
-NV12_CONFIG_SRC=$DOTFILES/nvim_v12
+#NV12_CONFIG_SRC=$DOTFILES/nvim_v12
 PHPACTOR_DIR=$DOTFILES/phpactor
 SCRIPTS_SOURCE_DIR=$DOTFILES/scripts
 SCRIPTS_DEST_DIR=$HOME/.local/bin
@@ -30,13 +30,13 @@ else
     echo "Neovim config file cannot be loaded"
 fi
 
-if [[ -d "$NV12_CONFIG_SRC" ]]; then
-    rm -rf "$HOME"/.config/nvim_v12
-    ln -s "$NV12_CONFIG_SRC" "$HOME"/.config/nvim_v12
-    echo "Neovim v0.12 config linked"
-else
-    echo "Neovim v0.12 config file cannot be loaded"
-fi
+#if [[ -d "$NV12_CONFIG_SRC" ]]; then
+#    rm -rf "$HOME"/.config/nvim_v12
+#    ln -s "$NV12_CONFIG_SRC" "$HOME"/.config/nvim_v12
+#    echo "Neovim v0.12 config linked"
+#else
+#    echo "Neovim v0.12 config file cannot be loaded"
+#fi
 
 # PhpActor
 if [[ -d "$PHPACTOR_DIR" ]]; then

@@ -21,8 +21,21 @@ class {}
 ]], {
         i(1, "App\\Models"), -- 1. Namespace
         i(2, "MyClass"),     -- 2. Osztály neve
-        i(3, "argument"),            -- 3. Konstruktor argumentumok
-        i(4, "variable"),            -- 3. Konstruktor
+        i(3, "argument"),    -- 3. Konstruktor argumentumok
+        i(4, "variable"),    -- 3. Konstruktor
+    })),
+})
+
+ls.add_snippets("php", {
+    s("puf", fmt([[
+public function {}(${}): {} {{
+    {}
+}}
+]], {
+        i(1, "func_name"),
+        i(2, "argument"),
+        i(3, "return_type"),
+        i(4, "func_body"),
     })),
 })
 
@@ -32,9 +45,9 @@ array_map(function(${}) {{
     return ${};
 }}, ${});
 ]], {
-        i(1, "item"),       -- A ciklusváltozó neve
-        i(2, "item"),      -- A visszatérési érték
-        i(3, "array"),     -- Az input tömb
+        i(1, "item"),  -- A ciklusváltozó neve
+        i(2, "item"),  -- A visszatérési érték
+        i(3, "array"), -- Az input tömb
     })),
 })
 

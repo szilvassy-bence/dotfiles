@@ -59,4 +59,4 @@ alias gife='git fetch'
 alias gipul='git pull'
 alias gipus='git push'
 
-alias nvim_v12="NVIM_APPNAME=nvim_v12 ~/bin/nvim_v12"
+#alias nvim_v12="NVIM_APPNAME=nvim_v12 ~/bin/nvim_v12"
